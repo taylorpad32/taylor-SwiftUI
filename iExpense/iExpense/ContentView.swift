@@ -16,7 +16,7 @@ struct SecondView: View {
     @Environment(\.presentationMode) var presentationMode
     var name: String
     @ObservedObject private var user = User()
-    @State private var showingSheet1 = false
+    @State private var showingSheet = false
     
     @State private var numbers = [Int]()
     @State private var currentNumber = 1

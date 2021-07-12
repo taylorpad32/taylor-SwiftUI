@@ -12,11 +12,32 @@ class User: ObservableObject {
     @Published var lastName = "Rabbit"
 }
 
+//======================
+
+struct ThirdView: View {
+    @Environment(\.presentationMode) var presentationMode
+    var name: String
+    @ObservedObject private var user = User()
+    @State private var showingSheet1 = false
+
+    
+    var body: some View {
+            Button("Click here to dismiss the page") {
+                self.presentationMode.wrappedValue.dismiss()
+                }
+            }
+}
+
+
+
+// =======================
+
 struct SecondView: View {
     @Environment(\.presentationMode) var presentationMode
     var name: String
     @ObservedObject private var user = User()
     @State private var showingSheet = false
+    @State private var showingSheet1 = false
     
     @State private var numbers = [Int]()
     @State private var currentNumber = 1
@@ -25,6 +46,14 @@ struct SecondView: View {
             Button("Click here to dismiss the page") {
                 self.presentationMode.wrappedValue.dismiss()
             }
+            Button("Show Sheet") {
+                    self.showingSheet1.toggle()
+                }
+                .sheet(isPresented: $showingSheet1) {
+                    ThirdView(name: "dad")
+                
+                }
+    
         NavigationView {
             VStack {
                 List {
@@ -68,9 +97,12 @@ struct ContentView: View {
     }
 }
 
+
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
+
 
